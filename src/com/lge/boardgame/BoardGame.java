@@ -10,7 +10,7 @@ class BoardGame implements GameTree<Point> {
 	private int winning;
 	int data[][];
 	private int turn;
-	private Player players[];
+	protected Player[] players;
 
 	public BoardGame(int size, int winning, Player... players) {
 		this.size = size;
@@ -27,7 +27,7 @@ class BoardGame implements GameTree<Point> {
 		return winner() != -1 || full();
 	}
 
-	private boolean full() {
+	protected boolean full() {
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				if (data[i][j] == -1)
@@ -66,14 +66,18 @@ class BoardGame implements GameTree<Point> {
 	@Override
 	public void move(Point p) {
 		data[p.x][p.y] = turn;
-		turn = (turn + 1) % players.length;
+		turn = nextTurn();
 	}
 
-	private boolean cellEmpty(Point p) {
+    protected int nextTurn() {
+        return (turn + 1) % players.length;
+    }
+
+    protected boolean cellEmpty(Point p) {
 		return data[p.x][p.y] == -1;
 	}
 
-	private boolean outOfBoard(Point p) {
+	protected boolean outOfBoard(Point p) {
 		return p.x < 0 || p.x >= size || p.y < 0 || p.y >= size;
 	}
 

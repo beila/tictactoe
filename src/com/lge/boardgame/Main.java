@@ -1,10 +1,8 @@
 package com.lge.boardgame;
 
-import java.awt.Dimension;
+import javax.swing.*;
+import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
-
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 
 public class Main {
 
@@ -14,7 +12,7 @@ public class Main {
 			@Override
 			public void run() {
 				JFrame frame = new JFrame("BoardGame");
-				frame.add(Games.omok());
+				frame.add(Games.reversi());
 				frame.setSize(new Dimension(600, 600));
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.setVisible(true);

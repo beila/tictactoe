@@ -28,4 +28,15 @@ public class Games {
 		return new BoardGamePanel(game, drawer);
 	}
 
+    public static BoardGamePanel reversi() {
+        int size = 8;
+        BoardGame game = new ReversiGame(size, size,
+                new HumanPlayer(),
+                new ComputerPlayer(new RandomAi())
+        );
+        BoardDrawer drawer = new BoardDrawer(Drawers.grid(size),
+                Drawers.whiteO, Drawers.blackO);
+        return new BoardGamePanel(game, drawer);
+    }
+
 }
