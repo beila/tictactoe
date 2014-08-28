@@ -36,7 +36,7 @@ public class ReversiGame extends BoardGame {
                     continue;
                 for (Point dir : directions) {
                     Point point = new Point(x + dir.x, y + dir.y);
-                    if (!outOfBoard(point) && !cellEmpty(point)) {
+                    if (!outOfBoard(point) && cellEmpty(point)) {
                         result.add(point);
                     }
                 }
@@ -51,9 +51,9 @@ public class ReversiGame extends BoardGame {
         int centerX = getSize() / 2;
         int centerY = getSize() / 2;
         move(new Point(centerX, centerY));
-        move(new Point(centerX+1, centerY));
-        move(new Point(centerX+1, centerY+1));
-        move(new Point(centerX, centerY+1));
+        move(new Point(centerX-1, centerY));
+        move(new Point(centerX-1, centerY-1));
+        move(new Point(centerX, centerY-1));
     }
 
     @Override
