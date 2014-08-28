@@ -1,6 +1,6 @@
 package com.lge.boardgame;
 
-import java.awt.*;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,26 +23,41 @@ public class ReversiGame extends BoardGame {
         return nextMoves(nextTurn());
     }
 
-    private List<Point> nextMoves(int nextTurn) {
+    private List<Point> nextMoves(int me) {
+        List<Point> myPoints = points(me);
         List<Point> result = new ArrayList<>();
-        final Point directions[] = { new Point(1, 0), new Point(0, 1),
-                new Point(-1, 0), new Point(0, -1),
-                new Point(1, 1), new Point(1, -1),
-                new Point(-1, 1), new Point(-1, -1) };
-        for (int x = 0; x < getSize(); x++) {
-            for (int y = 0; y < getSize(); y++) {
-                int cell = data[x][y];
-                if (cell != nextTurn)
+        final Point directions[] = { new Point(1, 0), new Point(0, 1), new Point(-1, 0), new Point(0, -1),
+                new Point(1, 1), new Point(1, -1), new Point(-1, -1), new Point(-1, 1) };
+        for (Point myPoint: myPoints) {
+            for (Point dir: directions) {
+                Point neighbor = new Point(myPoint.x + dir.x, myPoint.y + dir.y);
+                if (cellEmpty(neighbor) || outOfBoard(neighbor) || me == get(neighbor.x, neighbor.y)) {
                     continue;
-                for (Point dir : directions) {
-                    Point point = new Point(x + dir.x, y + dir.y);
-                    if (!outOfBoard(point) && cellEmpty(point)) {
-                        result.add(point);
-                    }
+                }
+                Point stoppedPoint = stretchUntilDifferent(neighbor, dir);
+                if (!outOfBoard(stoppedPoint) && cellEmpty(stoppedPoint)) {
+                    result.add(stoppedPoint);
                 }
             }
         }
         return result;
+    }
+
+    private Point stretchUntilDifferent(Point start, Point dir) {
+        //TODO
+        return null;
+    }
+
+    private List<Point> points(int me) {
+        List<Point> points = new ArrayList<>();
+        for(int x = 0; x < data.length; ++x) {
+            for(int y = 0; y < data[0].length; ++y) {
+                if (data[x][y] == me) {
+                    points.add(new Point(x, y));
+                }
+            }
+        }
+        return points;
     }
 
     @Override

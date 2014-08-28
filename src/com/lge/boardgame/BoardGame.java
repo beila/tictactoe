@@ -98,15 +98,19 @@ class BoardGame implements GameTree<Point> {
 		return -1;
 	}
 
-	private boolean match(int cell, int x, int y, Point dir) {
-		for (int i = 1; i < winning; i++) {
+    private boolean match(int cell, int x, int y, Point dir) {
+        return match(cell, x, y, dir, winning);
+    }
+
+    protected boolean match(int cell, int x, int y, Point dir, int length) {
+		for (int i = 1; i < length; i++) {
 			if (cell != get(x + i * dir.x, y + i * dir.y))
 				return false;
 		}
 		return true;
 	}
 
-	private int get(int i, int j) {
+	protected int get(int i, int j) {
 		if (outOfBoard(new Point(i, j)))
 			return -1;
 		return data[i][j];
